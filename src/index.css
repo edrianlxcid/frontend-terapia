@@ -1,1 +1,13 @@
 @import "tailwindcss";
+
+@theme {
+  --color-runa-blue: #1C355E;
+  --color-runa-red: #6B1C23;
+  --color-runa-gold: #D4A336;
+  --color-runa-brown: #5E3A1A;
+  --color-runa-beige: #F4EFE6;
+  --color-runa-light: #FCFAF8;
+
+  --font-serif: "Playfair Display", serif;
+  --font-sans: "Inter", system-ui, sans-serif;
+}
