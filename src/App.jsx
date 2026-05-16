@@ -6,9 +6,34 @@ import {
 } from 'lucide-react';
 import logoRuna from './assets/logo_runamente_color-removebg-preview.png';
 import tortugaIcon from './assets/tortuga_sin_bg.png';
+import imgAlex from './assets/alex.jpeg';
+import imgGaby from './assets/gaby.jpeg';
+import logoRunaSolo from './assets/runa_solo_logo.png';
+import condorIcon from './assets/condor_sin_bg.png';
+
 
 // URL del backend (Local para desarrollo, luego se cambiará por la de Render)
 const BACKEND_URL = import.meta.env.VITE_BACKEND_URL || 'http://localhost:3000';
+
+const AREAS_Y_SERVICIOS = {
+  'Psicología': [
+    'Atención Psicológica/Clínica/Infantil',
+    'Ev. Psicológica',
+    'Ev. Psicopedagógica',
+    'Ev. Desarrollo'
+  ],
+  'Terapia de Lenguaje': [
+    'Evaluación de Lenguaje',
+    'Terapia de Lenguaje'
+  ],
+  'Terapia Ocupacional': [
+    'Evaluación Ocupacional',
+    'Terapia Ocupacional'
+  ]
+};
+
+// Por ahora solo mostraremos Psicología, cuando hayan más especialistas agregamos las otras al array.
+const AREAS_VISIBLES = ['Psicología'];
 
 export default function App() {
   const [step, setStep] = useState(0);
@@ -18,7 +43,7 @@ export default function App() {
   // Paso 1: Datos Personales
   const [personalData, setPersonalData] = useState({
     nombre: '', telefono: '', email: '', fechaNacimiento: '', edad: '',
-    representanteNombre: '', representanteTelefono: '', servicio: 'Consulta', motivo: ''
+    representanteNombre: '', representanteTelefono: '', area: 'Psicología', servicio: 'Atención Psicológica/Clínica/Infantil', motivo: ''
   });
 
   // Paso 2: Datos Socioeconómicos
@@ -49,6 +74,15 @@ export default function App() {
     } else {
       setPersonalData(prev => ({ ...prev, [name]: value }));
     }
+  };
+
+  const handleAreaChange = (e) => {
+    const newArea = e.target.value;
+    setPersonalData(prev => ({
+      ...prev,
+      area: newArea,
+      servicio: AREAS_Y_SERVICIOS[newArea][0] // Seleccionar automáticamente el primer servicio de la nueva área
+    }));
   };
 
   const handleSocioChange = (e) => {
@@ -105,16 +139,91 @@ export default function App() {
   };
 
   return (
-    <div className="min-h-screen bg-runa-beige flex flex-col font-sans text-runa-brown">
-      <div className="flex-1 flex items-center justify-center p-4">
-        <div className="w-full max-w-lg bg-runa-light rounded-2xl shadow-2xl overflow-hidden border border-runa-brown/10">
+    <div className="min-h-screen bg-runa-beige flex flex-col font-sans text-runa-brown relative overflow-hidden">
+      
+      {/* Fondo difuminado de tortugas en el inicio */}
+      {step === 0 && (
+        <div className="absolute inset-0 pointer-events-none z-0 opacity-[0.25] blur-[1px]">
+          {/* Lado Izquierdo */}
+          <img src={tortugaIcon} className="absolute top-[5%] left-[5%] w-24 h-24 -rotate-12" alt="" />
+          <img src={tortugaIcon} className="absolute top-[25%] left-[12%] w-20 h-20 rotate-45" alt="" />
+          <img src={tortugaIcon} className="absolute top-[45%] left-[2%] w-16 h-16 rotate-90" alt="" />
+          <img src={tortugaIcon} className="absolute bottom-[35%] left-[8%] w-28 h-28 -rotate-12" alt="" />
+          <img src={tortugaIcon} className="absolute bottom-[15%] left-[5%] w-32 h-32 rotate-45" alt="" />
+          <img src={tortugaIcon} className="absolute bottom-[5%] left-[25%] w-16 h-16 rotate-180" alt="" />
+          
+          {/* Lado Derecho */}
+          <img src={tortugaIcon} className="absolute top-[10%] right-[8%] w-32 h-32 rotate-12" alt="" />
+          <img src={tortugaIcon} className="absolute top-[30%] right-[15%] w-16 h-16 -rotate-45" alt="" />
+          <img src={tortugaIcon} className="absolute top-[50%] right-[4%] w-24 h-24 -rotate-90" alt="" />
+          <img src={tortugaIcon} className="absolute bottom-[40%] right-[5%] w-20 h-20 rotate-12" alt="" />
+          <img src={tortugaIcon} className="absolute bottom-[20%] right-[12%] w-28 h-28 -rotate-45" alt="" />
+          <img src={tortugaIcon} className="absolute bottom-[10%] right-[25%] w-20 h-20 rotate-90" alt="" />
+          
+          {/* Centro/Arriba/Abajo */}
+          <img src={tortugaIcon} className="absolute top-[2%] right-[40%] w-16 h-16 -rotate-12" alt="" />
+          <img src={tortugaIcon} className="absolute bottom-[2%] left-[45%] w-24 h-24 rotate-180" alt="" />
+        </div>
+      )}
+
+      {/* Fondo difuminado de Runa en Datos del Paciente */}
+      {step === 1 && (
+        <div className="absolute inset-0 pointer-events-none z-0 opacity-[0.20] blur-[1px]">
+          {/* Lado Izquierdo */}
+          <img src={logoRunaSolo} className="absolute top-[5%] left-[5%] w-24 h-24 -rotate-12" alt="" />
+          <img src={logoRunaSolo} className="absolute top-[25%] left-[12%] w-20 h-20 rotate-45" alt="" />
+          <img src={logoRunaSolo} className="absolute top-[45%] left-[2%] w-16 h-16 rotate-90" alt="" />
+          <img src={logoRunaSolo} className="absolute bottom-[35%] left-[8%] w-28 h-28 -rotate-12" alt="" />
+          <img src={logoRunaSolo} className="absolute bottom-[15%] left-[5%] w-32 h-32 rotate-45" alt="" />
+          <img src={logoRunaSolo} className="absolute bottom-[5%] left-[25%] w-16 h-16 rotate-180" alt="" />
+          
+          {/* Lado Derecho */}
+          <img src={logoRunaSolo} className="absolute top-[10%] right-[8%] w-32 h-32 rotate-12" alt="" />
+          <img src={logoRunaSolo} className="absolute top-[30%] right-[15%] w-16 h-16 -rotate-45" alt="" />
+          <img src={logoRunaSolo} className="absolute top-[50%] right-[4%] w-24 h-24 -rotate-90" alt="" />
+          <img src={logoRunaSolo} className="absolute bottom-[40%] right-[5%] w-20 h-20 rotate-12" alt="" />
+          <img src={logoRunaSolo} className="absolute bottom-[20%] right-[12%] w-28 h-28 -rotate-45" alt="" />
+          <img src={logoRunaSolo} className="absolute bottom-[10%] right-[25%] w-20 h-20 rotate-90" alt="" />
+          
+          {/* Centro/Arriba/Abajo */}
+          <img src={logoRunaSolo} className="absolute top-[2%] right-[40%] w-16 h-16 -rotate-12" alt="" />
+          <img src={logoRunaSolo} className="absolute bottom-[2%] left-[45%] w-24 h-24 rotate-180" alt="" />
+        </div>
+      )}
+
+      {/* Fondo mixto en Evaluación Socioeconómica */}
+      {step === 2 && (
+        <div className="absolute inset-0 pointer-events-none z-0 opacity-[0.20] blur-[1px]">
+          {/* Lado Izquierdo */}
+          <img src={logoRunaSolo} className="absolute top-[5%] left-[5%] w-24 h-24 -rotate-12" alt="" />
+          <img src={tortugaIcon} className="absolute top-[25%] left-[12%] w-20 h-20 rotate-45" alt="" />
+          <img src={logoRunaSolo} className="absolute top-[45%] left-[2%] w-16 h-16 rotate-90" alt="" />
+          <img src={tortugaIcon} className="absolute bottom-[35%] left-[8%] w-28 h-28 -rotate-12" alt="" />
+          <img src={logoRunaSolo} className="absolute bottom-[15%] left-[5%] w-32 h-32 rotate-45" alt="" />
+          <img src={tortugaIcon} className="absolute bottom-[5%] left-[25%] w-16 h-16 rotate-180" alt="" />
+          
+          {/* Lado Derecho */}
+          <img src={tortugaIcon} className="absolute top-[10%] right-[8%] w-32 h-32 rotate-12" alt="" />
+          <img src={logoRunaSolo} className="absolute top-[30%] right-[15%] w-16 h-16 -rotate-45" alt="" />
+          <img src={tortugaIcon} className="absolute top-[50%] right-[4%] w-24 h-24 -rotate-90" alt="" />
+          <img src={logoRunaSolo} className="absolute bottom-[40%] right-[5%] w-20 h-20 rotate-12" alt="" />
+          <img src={tortugaIcon} className="absolute bottom-[20%] right-[12%] w-28 h-28 -rotate-45" alt="" />
+          <img src={logoRunaSolo} className="absolute bottom-[10%] right-[25%] w-20 h-20 rotate-90" alt="" />
+          
+          {/* Centro/Arriba/Abajo */}
+          <img src={logoRunaSolo} className="absolute top-[2%] right-[40%] w-16 h-16 -rotate-12" alt="" />
+          <img src={tortugaIcon} className="absolute bottom-[2%] left-[45%] w-24 h-24 rotate-180" alt="" />
+        </div>
+      )}
+
+      <div className="flex-1 flex items-center justify-center p-4 relative z-10">
+        <div className="w-full max-w-lg bg-runa-light rounded-2xl shadow-2xl overflow-hidden border border-runa-brown/10 relative">
 
           {/* PASO 0: INTRO */}
           {step === 0 && (
             <div className="p-8 text-center">
-              {/* Espacio para Logo Runa Mente */}
               <div className="mx-auto mb-8 flex justify-center">
-                <div className="w-72 h-72 flex items-center justify-center relative scale-110 md:scale-125 transition-transform">
+                <div className="w-72 h-72 flex items-center justify-center relative scale-110 md:scale-125 transition-transform animate-float">
                   <img src={logoRuna} alt="Logo Runa Mente" className="w-full h-full object-contain drop-shadow-xl" />
                 </div>
               </div>
@@ -178,14 +287,23 @@ export default function App() {
                     <input required type="email" name="email" value={personalData.email} onChange={handlePersonalChange} className="w-full p-2 border border-runa-brown/30 rounded-lg focus:ring-2 focus:ring-runa-gold outline-none bg-white text-runa-blue" />
                   </div>
                 </div>
-                <div>
-                  <label className="block text-sm font-medium text-runa-brown mb-1">¿Qué servicio necesitas?</label>
-                  <select name="servicio" value={personalData.servicio} onChange={handlePersonalChange} className="w-full p-2 border border-runa-brown/30 rounded-lg focus:ring-2 focus:ring-runa-gold outline-none bg-white text-runa-blue">
-                    <option value="Consulta">Consulta General</option>
-                    <option value="Ev. Psicológica">Evaluación Psicológica</option>
-                    <option value="Ev. Psicopedagógica">Evaluación Psicopedagógica</option>
-                    <option value="Ev. Desarrollo">Evaluación de Desarrollo</option>
-                  </select>
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                  <div>
+                    <label className="block text-sm font-medium text-runa-brown mb-1">Área de servicio</label>
+                    <select name="area" value={personalData.area} onChange={handleAreaChange} className="w-full p-2 border border-runa-brown/30 rounded-lg focus:ring-2 focus:ring-runa-gold outline-none bg-white text-runa-blue">
+                      {AREAS_VISIBLES.map(area => (
+                        <option key={area} value={area}>{area}</option>
+                      ))}
+                    </select>
+                  </div>
+                  <div>
+                    <label className="block text-sm font-medium text-runa-brown mb-1">Servicio específico</label>
+                    <select name="servicio" value={personalData.servicio} onChange={handlePersonalChange} className="w-full p-2 border border-runa-brown/30 rounded-lg focus:ring-2 focus:ring-runa-gold outline-none bg-white text-runa-blue">
+                      {AREAS_Y_SERVICIOS[personalData.area]?.map(srv => (
+                        <option key={srv} value={srv}>{srv}</option>
+                      ))}
+                    </select>
+                  </div>
                 </div>
                 <div>
                   <label className="block text-sm font-medium text-runa-brown mb-1">Motivo principal</label>
@@ -350,11 +468,29 @@ export default function App() {
                 <div className="absolute -top-4 -right-4 p-4 opacity-5 text-runa-brown"><Stethoscope size={120} /></div>
 
                 <div className="relative z-10">
-                  <p className="text-sm font-semibold text-runa-gold uppercase tracking-wide mb-1">Especialista Asignado</p>
-                  <p className="text-2xl font-serif font-bold text-runa-blue mb-6">{proposal.terapeuta.name}</p>
+                  <p className="text-sm font-semibold text-runa-gold uppercase tracking-wide mb-3">Especialista Asignado</p>
+                  
+                  <div className="flex items-center gap-4 mb-6 bg-white/60 p-3 rounded-2xl border border-runa-brown/10 shadow-sm">
+                    <img 
+                      src={proposal.terapeuta.name.includes('Alexander') ? imgAlex : imgGaby} 
+                      alt="Foto del especialista" 
+                      className="w-20 h-20 md:w-24 md:h-24 rounded-full object-cover border-2 border-runa-gold shadow-md flex-shrink-0"
+                    />
+                    <div className="flex-1">
+                      <p className="text-lg font-serif font-bold text-runa-blue leading-tight">
+                        {proposal.terapeuta.name.split(' (')[0]}
+                      </p>
+                      <p className="text-xs text-runa-brown/80 font-medium mt-1">
+                        {proposal.terapeuta.name.includes('(') ? proposal.terapeuta.name.split('(')[1].replace(')', '') : 'Especialista Runa Mente'}
+                      </p>
+                    </div>
+                    <div className="flex-shrink-0 pr-1 md:pr-2">
+                      <img src={condorIcon} alt="Logo Cóndor" className="w-16 md:w-20 h-auto object-contain opacity-80" />
+                    </div>
+                  </div>
 
                   <p className="text-sm font-semibold text-runa-gold uppercase tracking-wide mb-1">
-                    {personalData.servicio === 'Consulta' ? 'Costo por sesión' : 'Costo total de la evaluación'}
+                    {personalData.servicio.includes('Ev.') || personalData.servicio.includes('Evaluación') ? 'Costo total de la evaluación' : 'Costo por sesión'}
                   </p>
                   <div className="flex items-baseline gap-1">
                     <span className="text-5xl font-black text-runa-blue">${proposal.costo}</span>
