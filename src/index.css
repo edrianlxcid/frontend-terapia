@@ -1,23 +1,41 @@
 @import "tailwindcss";
 
 @theme {
-  --color-runa-blue: #1C355E;
-  --color-runa-red: #6B1C23;
-  --color-runa-gold: #D4A336;
-  --color-runa-brown: #5E3A1A;
-  --color-runa-beige: #F4EFE6;
-  --color-runa-light: #FCFAF8;
+  /* Primary Medical Colors */
+  --color-med-dark: #0A192F; /* Deep Navy Blue */
+  --color-med-cyan: #00D2D3; /* Bright Cyan / Teal Accent */
+  --color-med-cyan-hover: #48DBFB;
+  --color-med-light: #F8FAFC; /* Slate 50 */
+  --color-med-white: #FFFFFF;
+  --color-med-gray: #64748B; /* Slate 500 */
+  --color-med-text: #1E293B; /* Slate 800 */
 
-  --font-serif: "Playfair Display", serif;
   --font-sans: "Inter", system-ui, sans-serif;
 }
 
 @keyframes float {
   0% { transform: translateY(0px); }
-  50% { transform: translateY(-15px); }
+  50% { transform: translateY(-10px); }
   100% { transform: translateY(0px); }
+}
+
+@keyframes glow {
+  0% { box-shadow: 0 0 10px rgba(0, 210, 211, 0.2); }
+  50% { box-shadow: 0 0 20px rgba(0, 210, 211, 0.6); }
+  100% { box-shadow: 0 0 10px rgba(0, 210, 211, 0.2); }
 }
 
 .animate-float {
   animation: float 4s ease-in-out infinite;
+}
+
+.animate-glow {
+  animation: glow 3s ease-in-out infinite;
+}
+
+/* Base resets for modern feel */
+body {
+  background-color: var(--color-med-dark);
+  color: var(--color-med-white);
+  -webkit-font-smoothing: antialiased;
 }
